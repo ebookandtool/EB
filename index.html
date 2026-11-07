@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>डिजिटल बुक पोर्टल - प्रतियोगी परीक्षाओं की तैयारी</title>
+
+    <!-- PWA Manifest Link -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#111827">
+
+    <!-- Google tag (gtag.js) - Google Analytics Integration -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T8QCD904DQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-T8QCD904DQ');
+    </script>
+
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #f4f6f8; 
+            color: #2c3e50; 
+            line-height: 1.6;
+        }
+        header { 
+            background-color: #111827; 
+            color: #ecf0f1; 
+            padding: 1.2rem 2rem; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .search-box {
+            display: flex;
+            background: #fff;
+            border-radius: 4px;
+            overflow: hidden;
+            max-width: 400px;
+            width: 100%;
+        }
+        .search-box input {
+            padding: 0.6rem 1rem;
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 0.95rem;
+        }
+        .search-box button {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 0 1.2rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        section.hero { 
+            background: #111827; 
+            color: white; 
+            padding: 2.5rem 1.5rem; 
+            text-align: center; 
+            border-top: 1px solid #1f2937;
+        }
+        section.hero h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.8rem;
+        }
+        section.hero p {
+            color: #f3f4f6;
+            max-width: 700px;
+            margin: 0.5rem auto 0;
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+        .container { 
+            max-width: 1100px; 
+            margin: auto; 
+            padding: 2rem 1rem; 
+        }
+        h2 { 
+            color: #2c3e50;
+            border-bottom: 2px solid #319795; 
+            padding-bottom: 0.4rem; 
+            margin-top: 2.5rem; 
+            font-size: 1.5rem;
+        }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 1.5rem; 
+            margin-top: 1.5rem; 
+        }
+        .card { 
+            background: #ffffff; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03); 
+            padding: 1.8rem; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            border-top: 4px solid #319795; 
+            transition: transform 0.2s ease;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+        }
+        .card h3 { 
+            margin-top: 0.5rem; 
+            color: #1a202c; 
+            font-size: 1.3rem;
+        }
+        .btn { 
+            display: inline-block; 
+            background-color: #319795; 
+            color: white; 
+            padding: 0.7rem 1.2rem; 
+            text-decoration: none; 
+            border-radius: 6px; 
+            margin-top: 1.2rem; 
+            text-align: center; 
+            font-weight: 600; 
+            transition: background 0.2s;
+        }
+        .btn:hover { 
+            background-color: #2c7a7b; 
+        }
+        footer { 
+            background-color: #111827; 
+            color: #bdc3c7; 
+            text-align: center; 
+            padding: 1.5rem; 
+            margin-top: 3rem; 
+        }
+        .badge { 
+            background-color: #e6fffa; 
+            color: #234e52; 
+            padding: 0.3rem 0.7rem; 
+            border-radius: 4px; 
+            font-size: 0.8rem; 
+            font-weight: bold; 
+            display: inline-block; 
+            margin-bottom: 0.5rem; 
+        }
+        .badge-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+        .real-book-card {
+            background: linear-gradient(135deg, #fffdfa 0%, #fff6e9 100%);
+            border: 1px solid #e2d9c5;
+            box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05), inset 3px 0 0 #b45309;
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+        }
+        .book-cover-inner {
+            background: #ffffff;
+            border: 2px solid #fde68a;
+            border-radius: 8px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            margin: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+        }
+        .book-cover-inner h4 {
+            color: #991b1b;
+            font-size: 1.5rem;
+            margin: 0 0 0.4rem 0;
+            font-weight: 800;
+        }
+        .book-cover-inner p {
+            font-size: 0.9rem;
+            color: #4b5563;
+            margin-bottom: 1rem;
+        }
+        .mode-btn {
+            display: block;
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            margin: 0.6rem auto;
+            max-width: 280px;
+            box-shadow: 0 3px 6px rgba(29, 78, 216, 0.2);
+            transition: transform 0.1s;
+        }
+        .mode-btn:hover {
+            transform: scale(1.02);
+            background: linear-gradient(135deg, #1e40af, #1e3a8a);
+        }
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .tag {
+            background-color: #e5e7eb;
+            color: #374151;
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .tag.active {
+            background-color: #10b981;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div style="font-size: 1.5rem; font-weight: bold; letter-spacing: 0.5px;">📖 डिजिटल बुक पोर्टल</div>
+        <div class="search-box">
+            <input type="text" placeholder="किताबें या लेख खोजें...">
+            <button>खोजें</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>3D मॉडल एवं PDF किताबें और निशुल्क लेख</h1>
+        <p>रेलवे, एसएससी, उत्तर प्रदेश पुलिस भर्ती, और अन्य एकदिवसीय परीक्षाओं के लिए डिजिटल किताबें।</p>
+    </section>
+
+    <div class="container">
+        
+        <h2>🚀 वर्तमान में उपलब्ध डिजिटल बुक एवं क्विज़</h2>
+        <div class="grid" style="grid-template-columns: 1fr;">
+            
+            <div class="real-book-card">
+                <div>
+                    <div class="badge-container">
+                        <span class="badge" style="background-color: #fef3c7; color: #92400e; font-size: 0.85rem; padding: 0.4rem 0.8rem;"> लाइव / उपलब्ध (1600+ प्रश्न)</span>
+                        <span class="badge" style="background-color: #dcfce7; color: #166534; font-size: 0.85rem; padding: 0.4rem 0.8rem;">✨ निशुल्क (Free)</span>
+                    </div>
+                    
+                    <div class="book-cover-inner">
+                        <h4>भारतीय इतिहास - डिजिटल क्विज़ बुक</h4>
+                        <p>SSC (CGL), Railway, Police एवं अन्य प्रतियोगी परीक्षाओं के लिए</p>
+                        
+                        <a href="index-test.html" class="mode-btn">📖 अभ्यास मोड (Practice Mode)</a>
+                        <a href="index-test.html" class="mode-btn" style="background: linear-gradient(135deg, #047857, #065f46); box-shadow: 0 3px 6px rgba(4, 120, 87, 0.2);">📝 टेस्ट मोड (Test Mode)</a>
+                    </div>
+
+                    <p style="color: #334155; font-size: 1rem; margin-top: 1rem;"><strong>पाषाण काल से लेकर सन् 1947 तक (संपूर्ण इतिहास):</strong> पाषाण काल से लेकर आज़ादी तक के भारतीय इतिहास के महत्वपूर्ण 1600+ वस्तुनिष्ठ प्रश्न और विस्तृत व्याख्या। रेलवे, एसएससी और पुलिस भर्ती परीक्षा एवं अन्य एक दिवसीय परीक्षाओं के लिए अति महत्वपूर्ण।</p>
+                </div>
+                
+                <a href="index-test.html" class="btn" style="background-color: #c2410c; text-align: center; display: block; font-size: 1.1rem; padding: 0.9rem; box-shadow: 0 4px 6px rgba(194, 65, 12, 0.2);">🚀 क्विज़ हल करना शुरू करें (Start Now)</a>
+            </div>
+
+        </div>
+<div class="real-book-card" style="border-top-color: #1d4ed8; background: linear-gradient(135deg, #f0f7ff 0%, #e0f2fe 100%);">
+                <div>
+                    <div class="badge-container">
+                        <span class="badge" style="background-color: #dbeafe; color: #1e40af; font-size: 0.85rem; padding: 0.4rem 0.8rem;">नई बुक / उपलब्ध</span>
+                        <span class="badge" style="background-color: #dcfce7; color: #166534; font-size: 0.85rem; padding: 0.4rem 0.8rem;">✨ निशुल्क (Free)</span>
+                    </div>
+                    
+                    <div class="book-cover-inner" style="border-color: #93c5fd;">
+                        <h4 style="color: #1e40af;">भारतीय संविधान - डिजिटल क्विज़ बुक</h4>
+                        <p>SSC (CGL), Railway, Police एवं अन्य परीक्षाओं के लिए राजव्यवस्था</p>
+                        
+                        <a href="BharatiySamvidhan.html" class="mode-btn">📖 संविधान क्विज़ खोलें</a>
+                    </div>
+
+                    <p style="color: #334155; font-size: 1rem; margin-top: 1rem;"><strong>भारतीय संविधान एवं राजव्यवस्था:</strong> संविधान के महत्वपूर्ण अनुच्छेदों, मौलिक अधिकारों, संशोधन और शासन प्रणाली पर आधारित वस्तुनिष्ठ प्रश्न और विस्तृत व्याख्या।</p>
+                </div>
+                
+                <a href="BharatiySamvidhan.html" class="btn" style="background-color: #1d4ed8; text-align: center; display: block; font-size: 1.1rem; padding: 0.9rem; box-shadow: 0 4px 6px rgba(29, 78, 216, 0.2);">🚀 संविधान क्विज़ हल करना शुरू करें</a>
+            </div>
+
+        </div>
+
+        <!-- 📐 नया मैथ ग्राफ टूल सेक्शन (आपके तय किए गए नामों के साथ) -->
+        <h2 style="margin-top: 3rem;">📐 इंटरैक्टिव मैथ टूल्स</h2>
+        <div class="grid" style="grid-template-columns: 1fr;">
+            <div class="card" style="border-top-color: #0284c7; background: #f0fdf4;">
+                <div>
+                    <span class="badge" style="background-color: #e0f2fe; color: #0369a1;">नवीनतम टूल</span>
+                    <h3>एडवांस्ड यूनिवर्सल मैथ ग्राफ टूल</h3>
+                    <p>गणित के समीकरणों के ग्राफ को लाइव बनाएं, ज़ूम करें और PDF में प्रिंट करें।</p>
+                    
+                    <!-- यहाँ graf.jpg फोटो सेट है -->
+                    <div style="text-align: center; margin: 1rem 0;">
+                        <img src="graf.jpg" alt="Math Graph Tool Preview" style="max-width: 100%; height: auto; border-radius: 6px; border: 1px solid #cbd5e1; box-shadow: 0 4px 6px rgba(0,0,0,0.05);" onerror="this.style.display='none'">
+                    </div>
+                </div>
+                <!-- यहाँ mathgraf.html लिंक सेट है -->
+                <a href="mathgraf.html" class="btn" style="background-color: #0284c7; text-align: center; display: block; font-size: 1.1rem; padding: 0.9rem;">📊 ग्राफ टूल खोलें (Open Tool)</a>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 3rem;">📚 अन्य आगामी खंड</h2>
+        <div class="grid">
+            <div class="card" style="border-top-color: #319795;">
+                <div>
+                    <span class="badge" style="background-color: #fee2e2; color: #991b1b;">अभी उपलब्ध नहीं है</span>
+                    <h3>भारतीय इतिहास - मुगल काल</h3>
+                    <p>मुगल काल का विस्तृत इतिहास और ऐतिहासिक विश्लेषण।</p>
+                </div>
+                <span class="btn" style="background-color: #cbd5e1; color: #64748b; cursor: not-allowed; text-align: center; display: block;">शीघ्र उपलब्ध</span>
+            </div>
+
+            <div class="card">
+                <div>
+                    <span class="badge" style="background-color: #edf2f7; color: #4a5568;">आगामी विषय</span>
+                    <h3>भारत का भूगोल (Geography)</h3>
+                    <p>वस्तुनिष्ठ प्रश्नों के साथ।</p>
+                </div>
+                <span class="btn" style="background-color: #cbd5e1; color: #64748b; cursor: not-allowed; text-align: center; display: block;">जल्द उपलब्ध होगी</span>
+            </div>
+
+            <div class="card">
+                <div>
+                    <span class="badge" style="background-color: #edf2f7; color: #4a5568;">आगामी विषय</span>
+                    <h3>गणित (Maths) शॉर्टकट्स</h3>
+                    <p>रेलवे और एसएससी परीक्षाओं के लिए अंकगणित और एडवांस मैथ के बेहतरीन ट्रिक्स व प्रैक्टिस सेट्स।</p>
+                </div>
+                <span class="btn" style="background-color: #cbd5e1; color: #64748b; cursor: not-allowed; text-align: center; display: block;">जल्द उपलब्ध होगी</span>
+            </div>
+        </div>
+
+        <h2>✍️ निशुल्क लेख एवं गाइड (Free Articles)</h2>
+        
+        <div class="filter-tags">
+            <span class="tag active">सभी लेख</span>
+            <span class="tag">🎯 परीक्षा की तैयारी कैसे करें?</span>
+            <span class="tag">📜 ऐतिहासिक तथ्य एवं विश्लेषण</span>
+            <span class="tag">💡 अध्ययन टिप्स और शॉर्टकट्स</span>
+        </div>
+
+        <div class="grid" style="margin-top: 1rem;">
+            
+            <div class="card" style="border-top-color: #0284c7; background: #f0fdf4;">
+                <div>
+                    <span class="badge" style="background-color: #dcfce7; color: #166534;">रणनीति गाइड</span>
+                    <h3 style="margin-top: 0.5rem;">UP Police Bharti Pariksha ki Taiyari Kaise Kare</h3>
+                    <p>शारीरिक मानकों, सही लेवल की पहचान, सिलेबस और पिछले साल के पेपर्स के साथ पूरी रणनीति।</p>
+                </div>
+                <a href="up-police-guide.html" class="btn" style="background-color: #0284c7;">पूरा लेख पढ़ें</a>
+            </div>
+
+            <div class="card" style="border-top-color: #0284c7;">
+                <div>
+                    <span class="badge" style="background-color: #e0f2fe; color: #0369a1;">टाइम मैनेजमेंट</span>
+                    <h3 style="margin-top: 0.5rem;">ज्यादा देर तक पढ़ाई कैसे करें? (समय प्रबंधन)</h3>
+                    <p>कम समय में ज्यादा से ज्यादा सही प्रश्न हल करने और लंबे समय तक पढ़ाई करने की अचूक तकनीक।</p>
+                </div>
+                <a href="time-management.html" class="btn" style="background-color: #0284c7;">पूरा लेख पढ़ें</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 डिजिटल बुक पोर्टल</p>
+    </footer>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((reg) => console.log('Service Worker Registered successfully', reg.scope))
+                    .catch((err) => console.log('Service Worker Failed', err));
+            });
+        }
+    </script>
+</body>
+</html>
