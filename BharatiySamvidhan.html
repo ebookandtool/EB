@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>भारतीय संविधान - डिजिटल क्विज़ बुक</title>
+    
+    <meta name="description" content="भारतीय संविधान डिजिटल क्विज़ बुक - 1000+ महत्वपूर्ण प्रश्नों का संपूर्ण संग्रह। इसमें संविधान के प्रत्येक भाग के अनुसार अलग-अलग अध्याय और प्रश्न दिए गए हैं। यह SSC, रेलवे, यूपी पुलिस, यूपी लेखपाल, UPPSC, UPSC और अन्य कई परीक्षाओं के लिए अत्यंत उपयोगी है।">
+    
+    <meta name="keywords" content="भारतीय संविधान क्विज़, Indian Constitution MCQ, Samvidhan Chapter Wise Questions, SSC,railway,Polity Quiz, UP Police Constitution, UPPSC, UPSC, 1000 Plus Questions Quiz Book">
+    
+    <meta name="author" content="N.K.Sir">
+
+    <style>
+        :root {
+            --bg-page: #f2ede4;        
+            --bg-card: #ffffff;        
+            --bg-option: #faf8f5;      
+            
+            --heading-color: #d90429;  
+            --question-color: #d90429; 
+            --option-text: #0047ab;    
+            
+            --success-color: #2b9348;  
+            --error-color: #d90429;    
+            --border-color: #e0d8cc;   
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-page);
+            color: #2c221e;
+            margin: 0;
+            padding: 15px;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(44, 34, 30, 0.05);
+            border: 1px solid var(--border-color);
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--heading-color);
+            margin-bottom: 10px;
+            font-size: 26px;
+            font-weight: 700;
+        }
+        .mode-selection {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            background: linear-gradient(135deg, #0056b3 0%, #003366 100%);
+            color: #ffffff;
+            border: 1px solid #004085;
+            padding: 12px 22px;
+            font-size: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(0, 86, 179, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mode-btn:hover {
+            background: linear-gradient(135deg, #0069d9, #002244);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0, 86, 179, 0.35);
+        }
+
+        .btn {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: #004085;
+            transform: translateY(-1px);
+        }
+
+        .index-box {
+            background: #faf4eb;
+            border: 1px solid var(--border-color);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        .index-title {
+            font-weight: 700;
+            color: #8b4513;
+            margin-bottom: 10px;
+            font-size: 17px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .index-list {
+            list-style: none;
+            padding: 0 8px 0 0;
+            margin: 0;
+            max-height: 220px;
+            overflow-y: auto;
+            font-size: 15px;
+            scrollbar-width: thin;
+            scrollbar-color: #bfae96 #f2ede4;
+        }
+
+        .index-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .index-list::-webkit-scrollbar-track {
+            background: #f2ede4;
+            border-radius: 4px;
+        }
+
+        .index-list::-webkit-scrollbar-thumb {
+            background: #bfae96;
+            border-radius: 4px;
+        }
+
+        .index-item {
+            padding: 8px 10px;
+            border-bottom: 1px dashed #e8dfd1;
+            color: #1d3557;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .index-item:hover {
+            background-color: #f0e6dc;
+            color: #d90429;
+            font-weight: 600;
+        }
+
+        .index-item.selected-index {
+            background-color: #d7e3fc !important;
+            color: #0047ab !important;
+            font-weight: 700;
+            border-left: 4px solid #0056b3;
+        }
+
+        .chapter-tip {
+            font-size: 14px;
+            color: #0047ab;
+            background: #eef2f7;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            border-left: 3px solid #0056b3;
+            box-sizing: border-box;
+        }
+
+        .search-instruction {
+            font-size: 14px;
+            color: #4a3525;
+            margin-bottom: 15px;
+            font-weight: 600;
+            background: #f4efe6;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid #d90429;
+            box-sizing: border-box;
+            line-height: 1.5;
+        }
+
+        .search-container-center {
+            display: flex;
+            width: 100%;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .search-box {
+            flex: 1; 
+            height: 44px;
+            padding: 0 15px;
+            font-size: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--bg-option);
+            color: #2c221e;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+            min-width: 0; 
+        }
+
+        .search-box:focus {
+            border-color: var(--option-text);
+        }
+
+        .search-btn-separate {
+            height: 44px;
+            width: 110px; 
+            background-color: #0056b3; 
+            color: white;
+            border: none;
+            font-size: 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex-shrink: 0; 
+            box-sizing: border-box;
+        }
+
+        .search-btn-separate:hover {
+            background-color: #004085;
+        }
+
+        .search-btn-separate:active {
+            transform: scale(0.98);
+        }
+
+        .active-chapter-banner {
+            background: #eef2f7;
+            color: #1d3557;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 20px;
+            border-left: 4px solid #0056b3;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .question-card {
+            margin-bottom: 25px;
+            padding: 22px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--bg-card);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            box-sizing: border-box;
+        }
+
+        .question-title {
+            font-size: 18px;
+            font-weight: 700; 
+            margin-bottom: 16px;
+            color: var(--question-color); 
+            line-height: 1.5;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .option-item {
+            background: var(--bg-option);
+            border: 1px solid var(--border-color);
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 16px;
+            color: var(--option-text); 
+            line-height: 1.4;
+            font-weight: 600;
+            box-sizing: border-box;
+        }
+
+        .option-item:hover {
+            background-color: #f0ece4;
+            border-color: #bfae96;
+        }
+
+        .selected-option {
+            background-color: #c7e3fc !important;
+            border-color: #7097eb !important;
+            color: #0047ab !important;
+            font-weight: 700;
+        }
+
+        .correct-option {
+            background-color: #d8f3dc !important;
+            color: #1b4332 !important;
+            border-color: var(--success-color) !important;
+            font-weight: 700;
+        }
+
+        .incorrect-option {
+            background-color: #ffccd5 !important;
+            color: var(--error-color) !important;
+            font-weight: 700;
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 14px 16px;
+            background: #eef2f7;
+            border-left: 4px solid var(--option-text);
+            font-size: 15px;
+            display: none;
+            border-radius: 4px;
+            color: var(--option-text); 
+            line-height: 1.6;
+            font-weight: 600;
+            box-sizing: border-box;
+        }
+
+        #result-section {
+            display: none;
+            text-align: center;
+            padding: 25px;
+            background: #e8f5e9;
+            border-radius: 8px;
+            margin-top: 25px;
+            border: 1px solid #c8e6c9;
+            color: #2e7d32;
+            box-sizing: border-box;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>भारतीय संविधान - डिजिटल क्विज़ बुक</h1>
+ <div id="mode-selection" class="mode-selection">
+        <button class="mode-btn" onclick="startMode('practice')">📖 अभ्यास मोड (Practice)</button>
+        <button class="mode-btn" onclick="startMode('test')">📝 टेस्ट मोड (Test)</button>
+    </div>
+
+    <div id="quiz-container" class="hidden">
+        <div class="index-box">
+            <div class="index-title" onclick="toggleIndex()">
+                📚 पाठ्यक्रम सूचकांक (इंडेक्स) <span>▼ क्लिक करके देखें</span>
+            </div>
+            <ul id="indexList" class="index-list"></ul>
+        </div>
+
+        <div class="chapter-tip">
+            💡 <b>अन्य किसी भाग पर पहुँचने के लिए:</b> कृपया ऊपर सूची (इंडेक्स) में से सेलेक्ट करें।
+        </div>
+
+        <div class="search-instruction">
+            <b>नोट:</b> जल्दी से किसी प्रश्न पर पहुँचने के लिए—सर्च बॉक्स में केवल प्रश्न संख्या (जैसे 1) डालकर 'ढूंढें' पर क्लिक करें।
+        </div>
+
+        <div class="search-container-center">
+            <div class="search-wrapper">
+                <input type="text" id="searchInput" class="search-box" placeholder="प्रश्न संख्या डालें..." onkeyup="handleSearchKey(event)">
+                <button class="search-btn-separate" onclick="filterQuestions()">ढूंढें</button>
+            </div>
+        </div>
+
+        <div id="chapterBanner" class="active-chapter-banner">📂 भाग 1: संविधान का परिचय</div>
+        
+        <div id="questions-area"></div>
+        <button id="submit-btn" class="btn hidden" onclick="submitTest()" style="width: 100%; margin-top: 15px;">टेस्ट सबमिट करें</button>
+    </div>
+
+    <div id="result-section">
+        <h2>टेस्ट परिणाम</h2>
+        <p id="score-text" style="font-size: 19px; font-weight: bold;"></p>
+        <p id="rank-text" style="font-size: 16px;"></p>
+        <button class="btn" onclick="resetQuiz()" style="margin-top: 15px;">पुनः शुरू करें</button>
+    </div>
+</div>
+    <script src="q.js"></script>
+
+    <script src="bs.js"></script>
+</body>
+</html>
