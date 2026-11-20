@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPPCS प्री - सामान्य अध्ययन (GS) डिजिटल टेस्ट पेपर (टाइमर सहित)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f3f1e7;
+            color: #1e293b;
+            padding: 12px;
+            line-height: 1.5;
+        }
+
+        /* खींचकर कहीं भी ले जाने योग्य और किनारे के पीछे खिसकाने योग्य टाइमर */
+        .floating-timer {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            z-index: 999;
+            background-color: #08428c;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            border-radius: 10px;
+            padding: 7px 11px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+            text-align: right;
+            min-width: 116px;
+            touch-action: none;
+            user-select: none;
+            transition: transform 0.22s ease, opacity 0.2s ease, border-radius 0.2s ease;
+        }
+
+        .floating-timer.dragging {
+            transition: none;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.32);
+        }
+
+        .floating-timer.warning {
+            background-color: #b91c1c;
+            border-color: #fef08a;
+        }
+
+        .floating-timer.paused {
+            background-color: #7c2d12;
+            border-color: #fde68a;
+        }
+
+        /* किनारे के पीछे खिसकाने पर केवल पतली लकीर/टैब दिखने की अवस्था */
+        .floating-timer.docked-right {
+            transform: translateX(calc(100% - 14px));
+            border-radius: 10px 0 0 10px;
+            border-right: none;
+            opacity: 0.88;
+        }
+
+        .floating-timer.docked-left {
+            transform: translateX(calc(-100% + 14px));
+            border-radius: 0 10px 10px 0;
+            border-left: none;
+            opacity: 0.88;
+        }
+
+        .floating-timer .timer-label {
+            display: block;
+            font-size: 10.5px;
+            color: #dbeafe;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            cursor: grab;
+        }
+
+        .floating-timer .timer-value {
+            display: block;
+            font-size: 16px;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+            line-height: 1.2;
+            cursor: grab;
+        }
+
+        .timer-controls-row {
+            display: flex;
+            gap: 4px;
+            margin-top: 5px;
+        }
+
+        .timer-pause-btn,
+        .timer-hide-edge-btn {
+            background-color: rgba(255, 255, 255, 0.18);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 6px;
+            padding: 3px 6px;
+            font-size: 10.5px;
+            font-weight: 700;
+            cursor: pointer;
+            flex: 1;
+            white-space: nowrap;
+        }
+
+        .timer-pause-btn:hover,
+        .timer-hide-edge-btn:hover {
+            background-color: rgba(255, 255, 255, 0.28);
+        }
+
+        .main-container {
+            max-width: 680px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 14px;
+            padding: 20px 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header-section h1 {
+            color: #b91c1c;
+            font-size: 22px;
+            font-weight: 800;
+            line-height: 1.35;
+            margin-bottom: 8px;
+        }
+
+        .header-section p {
+            color: #475569;
+            font-size: 13.5px;
+        }
+
+        .mode-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            margin: 25px 0 15px 0;
+        }
+
+        .btn-primary {
+            background-color: #08428c;
+            color: #ffffff;
+            border: none;
+            padding: 13px 24px;
+            border-radius: 8px;
+            font-size: 15.5px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 85%;
+            max-width: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 3px 6px rgba(8, 66, 140, 0.25);
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #06326b;
+        }
+
+        .index-card {
+            background-color: #faf6ee;
+            border: 1px solid #e6dec8;
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 16px;
+        }
+
+        .index-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #7c2d12;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e6dec8;
+        }
+
+        .index-list {
+            list-style: none;
+            margin-top: 8px;
+            max-height: 240px;
+            overflow-y: auto;
+        }
+
+        .index-item {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ede7d9;
+            font-size: 14px;
+            color: #334155;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .index-item:last-child {
+            border-bottom: none;
+        }
+
+        .index-item.active {
+            background-color: #dbeafe;
+            color: #1e40af;
+            font-weight: 700;
+            border-right: 4px solid #1e40af;
+        }
+
+        .info-box {
+            background-color: #f1f5f9;
+            border-left: 4px solid #08428c;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+
+        .note-box {
+            background-color: #faf6ee;
+            border-left: 4px solid #b91c1c;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #334155;
+            margin-bottom: 14px;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14.5px;
+            outline: none;
+        }
+
+        .search-bar input:focus {
+            border-color: #08428c;
+        }
+
+        .search-bar button {
+            background-color: #08428c;
+            color: white;
+            border: none;
+            padding: 0 22px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .chapter-banner {
+            background-color: #f1f5f9;
+            border-left: 4px solid #08428c;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 15.5px;
+            margin-bottom: 18px;
+        }
+
+        .top-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            background: #f8fafc;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .controls-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .mode-badge {
+            font-size: 13px;
+            font-weight: 700;
+            color: #08428c;
+        }
+
+        .btn-switch {
+            background-color: #e2e8f0;
+            color: #1e293b;
+            border: none;
+            padding: 6px 11px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-reset-top {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            padding: 6px 11px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-reset-top:hover {
+            background-color: #fecaca;
+        }
+
+        .question-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+
+        .question-text {
+            color: #b91c1c;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            line-height: 1.5;
+            white-space: pre-line;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 12px 14px;
+            text-align: left;
+            font-size: 15px;
+            color: #1e3a8a;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background-color: #f1f5f9;
+        }
+
+        .option-btn.correct {
+            background-color: #dcfce7 !important;
+            border: 1.5px solid #22c55e !important;
+            color: #14532d !important;
+        }
+
+        .option-btn.wrong {
+            background-color: #ffe4e6 !important;
+            border: 1.5px solid #f43f5e !important;
+            color: #881337 !important;
+        }
+
+        .option-btn.selected-test {
+            background-color: #dbeafe !important;
+            border: 1.5px solid #2563eb !important;
+            color: #1e3a8a !important;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 14px;
+            background-color: #f1f5f9;
+            border-left: 4px solid #08428c;
+            padding: 12px 14px;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #1e3a8a;
+            line-height: 1.55;
+        }
+
+        .explanation-box strong {
+            color: #08428c;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin: 24px 0 10px 0;
+        }
+
+        .scorecard-box {
+            display: none;
+            background-color: #faf6ee;
+            border: 2px solid #08428c;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .scorecard-box h2 {
+            color: #b91c1c;
+            margin-bottom: 12px;
+            font-size: 20px;
+        }
+
+        .score-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .stat-item {
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+<!-- खींचकर कहीं भी ले जाने योग्य और किनारे के पीछे छिपाने योग्य टाइमर -->
+<div id="exam-timer" class="floating-timer hidden">
+    <span class="timer-label" id="timer-status-label">शेष समय (2 घंटे)</span>
+    <span class="timer-value" id="timer-display">02:00:00</span>
+    <div class="timer-controls-row" id="timer-controls-row">
+        <button type="button" class="timer-pause-btn" id="pause-resume-btn" onclick="toggleTimerPause()">⏸ रोकें</button>
+        <button type="button" class="timer-hide-edge-btn" id="edge-dock-btn" onclick="dockTimerToEdge()">↔ किनारे</button>
+    </div>
+</div>
+
+<div class="main-container">
+    <div class="header-section">
+        <h1>UPPCS प्री - सामान्य अध्ययन<br>डिजिटल टेस्ट पेपर</h1>
+        <p>संपूर्ण GS पाठ्यक्रम | अभ्यास मोड (Practice) एवं टेस्ट मोड (Test)</p>
+    </div>
+
+    <!-- होम स्क्रीन -->
+    <div id="home-screen">
+        <div class="mode-buttons">
+            <button class="btn-primary" onclick="startQuiz('practice')">
+                📖 अभ्यास मोड (Practice)
+            </button>
+            <button class="btn-primary" onclick="startQuiz('test')">
+                📝 टेस्ट मोड (Test)
+            </button>
+        </div>
+    </div>
+
+    <!-- क्विज़ / टेस्ट स्क्रीन -->
+    <div id="quiz-screen" class="hidden">
+        <div class="top-controls">
+            <span class="mode-badge" id="current-mode-label">मोड: अभ्यास (Practice)</span>
+            <div class="controls-actions">
+                <button type="button" class="btn-reset-top" onclick="confirmFullReset()">🔄 रिसेट करें</button>
+                <button type="button" class="btn-switch" onclick="toggleMode()">मोड बदलें</button>
+                <button type="button" class="btn-switch" onclick="goHome()">होम</button>
+            </div>
+        </div>
+
+        <div class="index-card">
+            <div class="index-header" onclick="toggleIndex()">
+                <span>📚 पाठ्यक्रम सूचकांक (Sections)</span>
+                <span id="index-arrow">▼ क्लिक करके देखें</span>
+            </div>
+            <ul class="index-list" id="index-list"></ul>
+        </div>
+
+        <div class="info-box">
+            💡 <strong>अन्य किसी भाग पर पहुँचने के लिए:</strong> कृपया ऊपर सूची (इंडेक्स) में से सेलेक्ट करें।
+        </div>
+
+        <div class="note-box">
+            <strong>नोट:</strong> जल्दी से किसी प्रश्न पर पहुँचने के लिए—सर्च बॉक्स में केवल प्रश्न संख्या डालकर 'ढूंढें' पर क्लिक करें।
+        </div>
+
+        <div class="search-bar">
+            <input type="number" id="search-input" placeholder="प्रश्न संख्या डालें..." min="1">
+            <button onclick="searchQuestion()">ढूंढें</button>
+        </div>
+
+        <div class="chapter-banner" id="chapter-title"></div>
+
+        <div class="scorecard-box" id="scorecard">
+            <h2>📊 आपका परीक्षा परिणाम (Scorecard)</h2>
+            <p id="score-message" style="font-weight: 600; color: #334155;"></p>
+            <div class="score-stats">
+                <div class="stat-item" style="color: #08428c;">कुल प्रश्न: <span id="total-q-count">0</span></div>
+                <div class="stat-item" style="color: #15803d;">सही उत्तर: <span id="correct-count">0</span></div>
+                <div class="stat-item" style="color: #b91c1c;">गलत उत्तर: <span id="wrong-count">0</span></div>
+                <div class="stat-item" style="color: #7c2d12;">अनुत्तरित: <span id="unattempted-count">0</span></div>
+            </div>
+            <button class="btn-primary" style="margin: 10px auto 0 auto;" onclick="resetTest()">🔄 पुनः टेस्ट दें</button>
+        </div>
+
+        <div id="questions-container"></div>
+
+        <div class="submit-section hidden" id="test-submit-area">
+            <button class="btn-primary" style="margin: 0 auto; background-color: #15803d;" onclick="submitTest()">
+                ✅ फाइनल सबमिट करें (Submit Test)
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="questions.js"></script>
+<script src="Timer_App.js"></script>
+
+</body>
+</html>
